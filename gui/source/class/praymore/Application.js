@@ -23,6 +23,7 @@ qx.Class.define ("praymore.Application",
 			}
 
 			var doc = this.getRoot ();
+			doc.setNativeContextMenu (true);
 			this.__scroll = new qx.ui.container.Scroll;
 			doc.add (this.__scroll, {edge: 0});
 			
