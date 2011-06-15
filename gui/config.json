@@ -37,7 +37,7 @@
   "let" :
   {
     "APPLICATION"  : "praymore",
-    "QOOXDOO_PATH" : "/opt/qooxdoo-1.4-sdk",
+    "QOOXDOO_PATH" : "/opt/qooxdoo-1.4.1-sdk",
     "QXTHEME"      : "praymore.theme.Theme",
     "API_EXCLUDE"  : ["qx.test.*", "${APPLICATION}.theme.*", "${APPLICATION}.test.*", "${APPLICATION}.simulation.*"],
     "LOCALES"      : [ "en" ],
