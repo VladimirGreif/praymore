@@ -11,7 +11,8 @@ qx.Class.define ("praymore.MainMenu",
 
 		this.__sections = {};
 		var grp = new qx.ui.form.RadioGroup;
-		for (var i in sections) {
+		var len = sections.length;
+		for (var i = 0; i < len; ++i) {
 			var s = sections[i];
 			var btn = new qx.ui.toolbar.RadioButton (s.getName ());
 			this.add (btn);
