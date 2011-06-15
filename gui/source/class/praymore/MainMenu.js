@@ -9,19 +9,20 @@ qx.Class.define ("praymore.MainMenu",
 
 		this.addSpacer ();
 
+		this.__sections = {};
 		var grp = new qx.ui.form.RadioGroup;
 		for (var i in sections) {
-			var btn = new qx.ui.toolbar.RadioButton (sections[i].name);
+			var s = sections[i];
+			var btn = new qx.ui.toolbar.RadioButton (s.getName ());
 			this.add (btn);
 			grp.add (btn)
-			sections[i].btn = btn; // FIXME: циклические ссылки
-			btn.setUserData ("xxx", sections[i]);
+			btn.setUserData ("hash", s.getHash ());
+			this.__sections[s.getHash ()] = btn;
 		}
+
 		grp.addListener ("changeSelection", function (e) {
-			var pg = e.getData ()[0].getUserData ("xxx");
-			this.fireDataEvent ("sectionChanged", pg);
-			this.debug (pg.name);
-		}, this); 
+			window.location.hash = e.getData ()[0].getUserData ("hash");
+		}); 
 
 		this.addSpacer ();
 
@@ -33,8 +34,11 @@ qx.Class.define ("praymore.MainMenu",
 		this.add (userBtn);
 	},
 
-	events: {
-		sectionChanged: "qx.event.type.Data"
+	members: {
+		__sections: null,
+		setSection: function (hash) {
+			this.__sections[hash].execute ();
+		}
 	}
 });
 
