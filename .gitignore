@@ -1,3 +1,4 @@
 
-gui/source/script/praymore.js
+gui/build/*
+gui/source/script/*
 .*.swp

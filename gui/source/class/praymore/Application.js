@@ -103,6 +103,7 @@ qx.Class.define ("praymore.Application",
 			var hash = location.hash;
 			var s = app.sections[hash];
 			if (s == undefined) {
+				this.debug ("unknown page: " + hash);
 				location.hash = "#dashboard";
 			}
 			else {
