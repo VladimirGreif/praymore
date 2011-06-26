@@ -13,7 +13,13 @@ qx.Class.define ("praymore.sections.Milestones",
 	},
 
 	members: {
+		dispatch: function () { return this; },
 		getName: function () { return "Milestones"; },
-		getHash: function () { return "#milestones"; }
+		getHash: function () { return "milestones"; }
+	},
+
+	statics: {
+		getName: function () { return "Milestones"; },
+		getHash: function () { return "milestones"; }
 	}
 });

@@ -17,8 +17,9 @@ qx.Class.define ("praymore.MainMenu",
 			var btn = new qx.ui.toolbar.RadioButton (s.getName ());
 			this.add (btn);
 			grp.add (btn)
-			btn.setUserData ("hash", s.getHash ());
-			this.__sections[s.getHash ()] = btn;
+			var h = s.getHash ();
+			btn.setUserData ("hash", h);
+			this.__sections[h] = btn;
 		}
 
 		grp.addListener ("changeSelection", function (e) {
