@@ -2,13 +2,12 @@
 
 qx.Class.define ("praymore.sections.Dashboard",
 {
-	extend: qx.ui.core.Widget,
+	extend: praymore.sections.BasePage,
 
-	construct: function (xxx) {
+	construct: function () {
 		this.base (arguments);
 
 		this._setLayout (new qx.ui.layout.VBox);
-		this.setAppearance ("groupbox/frame");
 
 		var headerLayout = new qx.ui.layout.HBox;
 		var header = new qx.ui.container.Composite (headerLayout);
@@ -20,7 +19,6 @@ qx.Class.define ("praymore.sections.Dashboard",
 		header.add (new qx.ui.core.Spacer, {flex: 1});
 		var btn = new qx.ui.form.Button ("Add new");
 		btn.addListener ("execute", function () {
-			xxx.showMenu (false);
 			var r = praymore.Util.get ("api/addNewUser");
 			this.debug (qx.util.Json.stringify (r));
 		});
@@ -43,9 +41,7 @@ qx.Class.define ("praymore.sections.Dashboard",
 	},
 
 	members: {
-		dispatch: function () { return this; },
-		getName: function () { return "Dashboard"; }, // TODO: translate
-		getHash: function () { return "dashboard"; }
+		dispatch: function () { return this; }
 	},
 
 	statics: {

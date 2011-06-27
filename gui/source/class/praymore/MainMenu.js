@@ -4,7 +4,7 @@ qx.Class.define ("praymore.MainMenu",
 {
 	extend: qx.ui.toolbar.ToolBar,
 
-	construct: function (sections) {
+	construct: function (usr, sections) {
 		this.base (arguments);
 
 		this.addSpacer ();
@@ -32,14 +32,17 @@ qx.Class.define ("praymore.MainMenu",
 		userMenu.add (new qx.ui.menu.Button ("Настройки"));
 		userMenu.add (new qx.ui.menu.Button ("Выйти"));
 
-		var userBtn = new qx.ui.toolbar.MenuButton ("username", null, userMenu)
+		var userBtn = new qx.ui.toolbar.MenuButton (usr.name, null, userMenu)
 		this.add (userBtn);
 	},
 
 	members: {
 		__sections: null,
 		setSection: function (hash) {
-			this.__sections[hash].execute ();
+			var btn = this.__sections[hash];
+			if (btn) {
+				btn.execute ();
+			}
 		}
 	}
 });

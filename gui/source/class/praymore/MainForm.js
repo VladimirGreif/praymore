@@ -18,7 +18,13 @@ qx.Class.define ("praymore.MainForm",
 		grid.setColumnMinWidth (2, 40);
 	 	grid.setColumnFlex (2, 1);
 
+		// FIXME: когда обновлять инфо о юзере?
+		var usr = praymore.Util.get ("api/userInfo");
+		if ("error" in usr) {
+			this.error (usr.error); // FIXME: handle error somehow
+		}
 		this.__menu = new praymore.MainMenu (
+			usr,
 			[ praymore.sections.Dashboard
 			, praymore.sections.Milestones
 			]);
@@ -35,7 +41,7 @@ qx.Class.define ("praymore.MainForm",
 		// footer
 		grid.setRowHeight (3, 20);
 		grid.setRowAlign (3, "center", "middle");
-		var info = new qx.ui.basic.Label ("bla-bla-bla");
+		var info = new qx.ui.basic.Label ("copyright notice");
 		this._add (info, {row: 3, column: 0, colSpan: 3});
 	},
 
@@ -47,7 +53,7 @@ qx.Class.define ("praymore.MainForm",
 		dispatch: function (hash) {
 			var m = (hash || "#dashboard").match (/#(\w*)\/*(.*)/);
 
-			m[1] == "login"
+			m[1] == "login" || m[1] == "register" // FIXME: обобщить?
 				? this.__menu.exclude ()
 				:	this.__menu.show ();
 
@@ -76,7 +82,8 @@ qx.Class.define ("praymore.MainForm",
 					return val;
 				}
 			};
-//			lazyAdd (praymore.sections.Login);
+			lazyAdd (praymore.sections.Login);
+			lazyAdd (praymore.sections.RegisterUser);
 			lazyAdd (praymore.sections.Dashboard);
 			lazyAdd (praymore.sections.Milestones);
 		},
