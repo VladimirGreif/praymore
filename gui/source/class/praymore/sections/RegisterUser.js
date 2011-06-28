@@ -1,10 +1,12 @@
 
 qx.Class.define ("praymore.sections.RegisterUser",
 {
-	extend: praymore.sections.BasePage,
+	extend: qx.ui.core.Widget,
 
 	construct: function () {
 		this.base (arguments);
+
+		this.setAppearance ("groupbox/frame");
 
 		var grid = new qx.ui.layout.Grid (20, 5);
 		this._setLayout (grid);
@@ -38,7 +40,7 @@ qx.Class.define ("praymore.sections.RegisterUser",
 		pwdTxt.setBuddy (pwdFld);
 		this._add (pwdTxt, {row: 2, column: 0});
 		this._add (pwdFld, {row: 2, column: 1});
-		this.__pwd1 = pwdFld;
+		this.__pwd1 = pwdFld1;
 
 		var errTxt = new qx.ui.basic.Label ("");
 		this._add (errTxt, {row: 3, column: 0, colSpan: 2});
@@ -67,7 +69,7 @@ qx.Class.define ("praymore.sections.RegisterUser",
 			var pwd1 = this.__pwd.getValue ();
 			if (usr && pwd && pwd1) {
 				if (pwd == pwd1) {
-					res = praymore.Util.get ("api/register?usr=" + usr + "&pwd=" + pwd);
+					var res = praymore.Util.get ("api/register?usr=" + usr + "&pwd=" + pwd);
 					if ("error" in res) {
 						this.__err.setValue (res.error);
 					} else {
@@ -83,7 +85,10 @@ qx.Class.define ("praymore.sections.RegisterUser",
 
 		dispatch: function (hash) {
 			return this;
-		}
+		},
+
+		getName: function () { return "Register"; },
+		getHash: function () { return "register"; }
 	},
 
 	statics: {

@@ -26,6 +26,19 @@ qx.Class.define ("praymore.Util",
 			}  catch (e) {
 				return {error: "invalid response from server"}
 			}
+		},
+
+
+		h2: function (name) {
+			return new qx.ui.basic.Label ().set (
+				{rich: true
+				,value: "<h2 style='color:#777;'>" + name + "</h2>"});
+		},
+
+		link: function (name, hash) {
+			return new qx.ui.basic.Label ().set (
+				{rich: true
+				,value: "<a href='" + hash + "'>" + name + "</a>"});
 		}
 	}
 });

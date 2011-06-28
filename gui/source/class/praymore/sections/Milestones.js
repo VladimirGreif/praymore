@@ -6,10 +6,6 @@ qx.Class.define ("praymore.sections.Milestones",
 
 	construct: function () {
 		this.base (arguments);
-
-		var grid = new qx.ui.layout.Grid;
-		this._setLayout (grid);
-		this._add (new qx.ui.basic.Label ("Milestones"), {row: 0, column: 0});
 	},
 
 	members: {

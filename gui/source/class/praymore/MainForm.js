@@ -21,6 +21,9 @@ qx.Class.define ("praymore.MainForm",
 		this.__menu = new praymore.MainMenu (
 			[ praymore.sections.Dashboard
 			, praymore.sections.Milestones
+			, praymore.sections.Users
+			, praymore.sections.Projects
+			, praymore.sections.Clients
 			]);
 		this._add (this.__menu, {row: 0, column: 0, colSpan: 3});
 
@@ -59,8 +62,7 @@ qx.Class.define ("praymore.MainForm",
 				}
 				this.setBody (pg);
 				this.__menu.setSection (pg.getHash ()); 
-				window.document.title	= pg.getName ();
-				// TODO: update menu
+				window.document.title	= "Praymore -- " + pg.getName ();
 				// TODO: update navigation
 			}		
 		},
@@ -80,6 +82,9 @@ qx.Class.define ("praymore.MainForm",
 			lazyAdd (praymore.sections.RegisterUser);
 			lazyAdd (praymore.sections.Dashboard);
 			lazyAdd (praymore.sections.Milestones);
+			lazyAdd (praymore.sections.Users);
+			lazyAdd (praymore.sections.Projects);
+			lazyAdd (praymore.sections.Clients);
 		},
 
 		__pages: null,
@@ -88,9 +93,7 @@ qx.Class.define ("praymore.MainForm",
 
 		__setCell: function (r, c, widget) {
 			var old = this.__grid.getCellWidget (r, c);
-			if (old != null) {
-				this._remove (old);
-			}
+			old && this._remove (old);
 			this._add (widget, {row: r, column: c});
 		}
 	}

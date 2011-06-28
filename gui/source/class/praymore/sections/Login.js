@@ -1,11 +1,13 @@
 
 qx.Class.define ("praymore.sections.Login",
 {
-	extend: praymore.sections.BasePage,
+	extend: qx.ui.core.Widget,
 
 	construct: function () {
 		this.base (arguments);
 
+		this.setAppearance ("groupbox/frame");
+		
 		var grid = new qx.ui.layout.Grid (20, 5);
 		this._setLayout (grid);
 		grid.setColumnFlex (0, 1);
@@ -67,7 +69,10 @@ qx.Class.define ("praymore.sections.Login",
 
 		dispatch: function (hash) {
 			return this;
-		}
+		},
+
+		getName: function () { return "Login"; },
+		getHash: function () { return "login"; }
 	},
 
 	statics: {
