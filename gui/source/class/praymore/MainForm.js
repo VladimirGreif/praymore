@@ -18,13 +18,7 @@ qx.Class.define ("praymore.MainForm",
 		grid.setColumnMinWidth (2, 40);
 	 	grid.setColumnFlex (2, 1);
 
-		// FIXME: когда обновлять инфо о юзере?
-		var usr = praymore.Util.get ("api/userInfo");
-		if ("error" in usr) {
-			this.error (usr.error); // FIXME: handle error somehow
-		}
 		this.__menu = new praymore.MainMenu (
-			usr,
 			[ praymore.sections.Dashboard
 			, praymore.sections.Milestones
 			]);

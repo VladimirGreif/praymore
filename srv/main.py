@@ -38,7 +38,7 @@ class Api:
 		usr = db.users.find_one ({'name': usr, 'pwd': pwd})
 		if usr:
 			sess = uuid1 ().get_hex () 
-			db.users.update ({'name': usr}, {'$set': {'sess': sess}})
+			db.users.update ({'_id': usr["_id"]}, {'$set': {'sess': sess}})
 			cherrypy.response.cookie["session"] = sess
 			return json.dumps ({"ok": True})
 		else:
@@ -46,13 +46,22 @@ class Api:
 
 
 	@expose
+	def logout (self):
+		s = cherrypy.request.cookie.get ('session')
+		if s:
+			db.users.remove ({"sess": str (s)})
+		return json.dumps ({"ok": True})
+
+
+	@expose
 	def userInfo (self):
 		s = cherrypy.request.cookie.get ('session')
-		usr = db.users.find_one ({"sess": s})
-		if usr:
-			return json.dumps (usr)
-		else:
-			return json.dumps ({"loginRequired": True})
+		if s:
+			usr = db.users.find_one ({"sess": s.value})
+			if usr:
+				usr["_id"] = str (usr["_id"])
+				return json.dumps ({"ok": usr})
+		return json.dumps ({"loginRequired": True})
 
 
 	@expose

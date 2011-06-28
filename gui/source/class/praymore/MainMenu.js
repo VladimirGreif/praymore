@@ -4,7 +4,7 @@ qx.Class.define ("praymore.MainMenu",
 {
 	extend: qx.ui.toolbar.ToolBar,
 
-	construct: function (usr, sections) {
+	construct: function (sections) {
 		this.base (arguments);
 
 		this.addSpacer ();
@@ -28,21 +28,43 @@ qx.Class.define ("praymore.MainMenu",
 
 		this.addSpacer ();
 
-		var userMenu = new qx.ui.menu.Menu ();
-		userMenu.add (new qx.ui.menu.Button ("Настройки"));
-		userMenu.add (new qx.ui.menu.Button ("Выйти"));
+		var userMenu = new qx.ui.menu.Menu;
+		var m1 = new qx.ui.menu.Button ("Настройки");
+		userMenu.add (m1);
+		var m2 = new qx.ui.menu.Button ("Выйти");
+		m2.addListener ("execute", this.__logout, this);
+		userMenu.add (m2);
 
-		var userBtn = new qx.ui.toolbar.MenuButton (usr.name, null, userMenu)
+		var userBtn = new qx.ui.toolbar.MenuButton ("username", null, userMenu)
 		this.add (userBtn);
+		this.__userMenuBtn = userBtn;
+		
+		this.addListener ("appear", this.refresh, this);
 	},
 
+
 	members: {
+		__userMenuBtn: null,
 		__sections: null,
+
+		__logout: function () {
+			praymore.Util.get ("api/logout");
+			qx.bom.Cookie.del ("session");
+			window.location.hash = "#login";	
+		},
+
+		refresh: function () {
+			// FIXME: когда обновлять инфо о юзере?
+			var usr = praymore.Util.get ("api/userInfo");
+			if (usr && "ok" in usr) {
+				this.__userMenuBtn.setLabel (usr.ok.name);
+			}
+			// FIXME: handle error somehow
+		},
+
 		setSection: function (hash) {
 			var btn = this.__sections[hash];
-			if (btn) {
-				btn.execute ();
-			}
+			btn && btn.execute ();
 		}
 	}
 });

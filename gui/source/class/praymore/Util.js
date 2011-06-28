@@ -18,8 +18,8 @@ qx.Class.define ("praymore.Util",
 				if ("loginRequired" in v) {
 					qx.log.Logger.debug ("login required");
 					var hash = window.location.hash;
-					window.location.hash = "#login" + hash.replace ("#", "/") // FIXME: 
-					throw "login required"
+					window.location.hash = "#login" + hash.replace ("#", "/"); // FIXME: 
+					return {loginRequired: true};
 				} else {
 					return v;
 				}
