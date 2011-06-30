@@ -40,7 +40,8 @@ qx.Class.define ("praymore.Application",
 
 			var sect = [
 				new praymore.sections.Dashboard,
-				new praymore.sections.Milestones
+				new praymore.sections.Milestones,
+				new praymore.sections.Users
 			];
 
 			var menu = new praymore.MainMenu (sect);
