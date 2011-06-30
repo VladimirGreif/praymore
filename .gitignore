@@ -1,0 +1,4 @@
+
+gui/build/*
+gui/source/script/*
+.*.swp

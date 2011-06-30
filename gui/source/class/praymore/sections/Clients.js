@@ -1,5 +1,5 @@
 
-qx.Class.define ("praymore.sections.Users",
+qx.Class.define ("praymore.sections.Clients",
 {
 	extend: praymore.sections.BasePage,
 
@@ -12,11 +12,6 @@ qx.Class.define ("praymore.sections.Users",
 		addBtn.setAlignY ("middle");
 		this._header.add (addBtn);
 		this._header.add (new qx.ui.core.Spacer (15));
-
-		var usrs = new praymore.widgets.UserWidget;
-		this._add (usrs, {row: 2, column: 1});
-		
-		usrs.setUserName ("Vladimir");
 	},
 
 	members: {
@@ -24,7 +19,7 @@ qx.Class.define ("praymore.sections.Users",
 	},
 
 	statics: {
-		getName: function () { return "Users"; },
-		getHash: function () { return "users"; }
+		getName: function () { return "Clients"; },
+		getHash: function () { return "clients"; }
 	}
 });
