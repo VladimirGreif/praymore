@@ -92,29 +92,34 @@ class Main:
 </html>
 """
 
-if len (sys.argv) > 1 and sys.argv[1] == "debug": 
-	config = {
-		"/script":
-			{"tools.staticdir.on": True
-			,"tools.staticdir.dir": os.getcwd() + "/../gui/source/script"
-			},
-		"/source":
-			{"tools.staticdir.on": True
-			,"tools.staticdir.dir": os.getcwd() + "/../gui/source"
-			},
-		"/opt":
-			{"tools.staticdir.on": True
-			,"tools.staticdir.dir": "/opt"
-			}
-		}
-else:
-	config = {
-		"/script":
-			{"tools.staticdir.on": True
-			,"tools.staticdir.dir":
-				"/home/praymore.formalmethods.ru/gui/build/script"
-			}
-	}
 
-root = Main ()
-cherrypy.quickstart (root, "/", config)
+if len (sys.argv) > 1 and sys.argv[1] == "debug":
+        config = {
+                "/":
+                        {"tools.staticdir.on": True
+                        ,"tools.staticdir.dir": os.getcwd() + "/../gui/source"
+                        },
+                "/opt":
+                        {"tools.staticdir.on": True
+                        ,"tools.staticdir.dir": "/opt"
+                        }
+                }
+        cherrypy.quickstart (Main (), "/", config)
+else:
+        sys.stdout = sys.stderr
+
+
+        cherrypy.config.update (
+                {"environment": "embedded"
+                ,"log.error_file": "/home/praymore.formalmethods.ru/site.log"});
+
+        config = {
+                "/":
+                        {"tools.staticdir.on": True
+                        ,"tools.staticdir.dir":
+                                "/home/praymore.formalmethods.ru/gui/build/"
+                        },
+        }
+
+        application = cherrypy.Application (Main (), "/", config)
+
