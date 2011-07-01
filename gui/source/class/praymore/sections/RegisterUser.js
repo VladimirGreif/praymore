@@ -36,7 +36,7 @@ qx.Class.define ("praymore.sections.RegisterUser",
 
 		var pwdTxt = new qx.ui.basic.Label ("Repeat password:");
 		var pwdFld1 = new qx.ui.form.PasswordField;
-		pwdFld.set ({tabIndex: 3});
+		pwdFld1.set ({tabIndex: 3});
 		pwdTxt.setBuddy (pwdFld);
 		this._add (pwdTxt, {row: 2, column: 0});
 		this._add (pwdFld1, {row: 2, column: 1});
