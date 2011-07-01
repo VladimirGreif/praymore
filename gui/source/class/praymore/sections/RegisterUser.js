@@ -35,11 +35,11 @@ qx.Class.define ("praymore.sections.RegisterUser",
 		this.__pwd = pwdFld;
 
 		var pwdTxt = new qx.ui.basic.Label ("Repeat password:");
-		var pwdFld = new qx.ui.form.PasswordField;
+		var pwdFld1 = new qx.ui.form.PasswordField;
 		pwdFld.set ({tabIndex: 3});
 		pwdTxt.setBuddy (pwdFld);
 		this._add (pwdTxt, {row: 2, column: 0});
-		this._add (pwdFld, {row: 2, column: 1});
+		this._add (pwdFld1, {row: 2, column: 1});
 		this.__pwd1 = pwdFld1;
 
 		var errTxt = new qx.ui.basic.Label ("");
@@ -66,7 +66,7 @@ qx.Class.define ("praymore.sections.RegisterUser",
 		__doRegister: function () {
 			var usr = this.__usr.getValue ();
 			var pwd = this.__pwd.getValue ();
-			var pwd1 = this.__pwd.getValue ();
+			var pwd1 = this.__pwd1.getValue ();
 			if (usr && pwd && pwd1) {
 				if (pwd == pwd1) {
 					var res = praymore.Util.get ("api/register?usr=" + usr + "&pwd=" + pwd);
