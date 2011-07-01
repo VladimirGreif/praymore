@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import os
+import sys
 from uuid import uuid1
 import json
 import pymongo
@@ -91,20 +92,29 @@ class Main:
 </html>
 """
 
-config = {
-	"/script":
-		{"tools.staticdir.on": True
-		,"tools.staticdir.dir": os.getcwd() + "/../gui/source/script"
-		},
-	"/source":
-		{"tools.staticdir.on": True
-		,"tools.staticdir.dir": os.getcwd() + "/../gui/source"
-		},
-	"/opt":
-		{"tools.staticdir.on": True
-		,"tools.staticdir.dir": "/opt"
+if len (sys.argv) > 1 and sys.argv[1] == "debug": 
+	config = {
+		"/script":
+			{"tools.staticdir.on": True
+			,"tools.staticdir.dir": os.getcwd() + "/../gui/source/script"
+			},
+		"/source":
+			{"tools.staticdir.on": True
+			,"tools.staticdir.dir": os.getcwd() + "/../gui/source"
+			},
+		"/opt":
+			{"tools.staticdir.on": True
+			,"tools.staticdir.dir": "/opt"
+			}
 		}
-	} 
+else:
+	config = {
+		"/script":
+			{"tools.staticdir.on": True
+			,"tools.staticdir.dir":
+				"/home/praymore.formalmethods.ru/gui/build/script"
+			}
+	}
 
 root = Main ()
 cherrypy.quickstart (root, "/", config)
