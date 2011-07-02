@@ -5,6 +5,7 @@ import os
 import sys
 from uuid import uuid1
 import json
+from datetime import datetime
 import pymongo
 import cherrypy
 from cherrypy import expose
@@ -28,10 +29,8 @@ class Api:
 		if db.users.find_one ({'name': usr}):
 			return json.dumps ({"error": "Username already registered."})
 		else:
-			s = uuid1 ().get_hex ()
-			db.users.save ({'name': usr, 'pwd': pwd, 'sess': s})
-			cherrypy.response.cookie["session"] = s
-			return json.dumps ({"ok": True})
+			db.users.save ({'name': usr, 'pwd': pwd})
+			return self.login (usr, pwd)
 
 
 	@expose
@@ -39,7 +38,7 @@ class Api:
 		usr = db.users.find_one ({'name': usr, 'pwd': pwd})
 		if usr:
 			sess = uuid1 ().get_hex () 
-			db.users.update ({'_id': usr["_id"]}, {'$set': {'sess': sess}})
+			db.sessions.save ({'usr': usr["_id"], 's': sess, 'tm': datetime.now ()})
 			cherrypy.response.cookie["session"] = sess
 			return json.dumps ({"ok": True})
 		else:
@@ -50,7 +49,7 @@ class Api:
 	def logout (self):
 		s = cherrypy.request.cookie.get ('session')
 		if s:
-			db.users.remove ({"sess": str (s)})
+			db.sessions.remove ({"s": s.value})
 		return json.dumps ({"ok": True})
 
 
@@ -58,10 +57,12 @@ class Api:
 	def userInfo (self):
 		s = cherrypy.request.cookie.get ('session')
 		if s:
-			usr = db.users.find_one ({"sess": s.value})
-			if usr:
-				usr["_id"] = str (usr["_id"])
-				return json.dumps ({"ok": usr})
+			sess = db.sessions.find_one ({"s": s.value})
+			if sess:
+				usr = db.users.find_one ({"_id": sess["usr"]})
+				if usr:
+					usr["_id"] = "?"
+					return json.dumps ({"ok": usr})
 		return json.dumps ({"loginRequired": True})
 
 
@@ -86,7 +87,7 @@ class Main:
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>praymore</title>
-  <script type="text/javascript" src="script/praymore.js"></script>
+  <script type="text/javascript" src="source/script/praymore.js"></script>
 </head>
 <body></body>
 </html>
@@ -94,32 +95,32 @@ class Main:
 
 
 if len (sys.argv) > 1 and sys.argv[1] == "debug":
-        config = {
-                "/":
-                        {"tools.staticdir.on": True
-                        ,"tools.staticdir.dir": os.getcwd() + "/../gui/source"
-                        },
-                "/opt":
-                        {"tools.staticdir.on": True
-                        ,"tools.staticdir.dir": "/opt"
-                        }
-                }
-        cherrypy.quickstart (Main (), "/", config)
+	config = {
+		"/":
+			{"tools.staticdir.on": True
+			,"tools.staticdir.dir": os.getcwd() + "/../gui/"
+			},
+		"/opt":
+			{"tools.staticdir.on": True
+			,"tools.staticdir.dir": "/opt"
+			}
+		}
+	cherrypy.quickstart (Main (), "/", config)
 else:
-        sys.stdout = sys.stderr
+	sys.stdout = sys.stderr
 
+	cherrypy.config.update (
+		{"environment": "embedded"
+		,"log.error_file": "/home/praymore.formalmethods.ru/site.log"
+		});
 
-        cherrypy.config.update (
-                {"environment": "embedded"
-                ,"log.error_file": "/home/praymore.formalmethods.ru/site.log"});
+	config = {
+		"/":
+			{"tools.staticdir.on": True
+			,"tools.staticdir.dir":
+			"/home/praymore.formalmethods.ru/gui/build/"
+			},
+	}
 
-        config = {
-                "/":
-                        {"tools.staticdir.on": True
-                        ,"tools.staticdir.dir":
-                                "/home/praymore.formalmethods.ru/gui/build/"
-                        },
-        }
-
-        application = cherrypy.Application (Main (), "/", config)
+	application = cherrypy.Application (Main (), "/", config)
 
