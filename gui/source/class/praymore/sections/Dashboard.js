@@ -6,7 +6,7 @@ qx.Class.define ("praymore.sections.Dashboard",
 
 	construct: function () {
 		this.base (arguments);
-
+/*
 		var btn = new qx.ui.form.Button ("Add new");
 		btn.addListener ("execute", function () {
 			var r = praymore.Util.get ("api/addNewUser");
@@ -23,6 +23,7 @@ qx.Class.define ("praymore.sections.Dashboard",
 				{rich: true
 				,value: "<a href=\"#milestones\">Milestones</a>"}),
 			{row: 1, column: 0});
+*/
 	},
 
 	members: {

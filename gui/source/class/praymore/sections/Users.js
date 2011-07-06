@@ -6,21 +6,30 @@ qx.Class.define ("praymore.sections.Users",
 	construct: function () {
 		this.base (arguments);
 
-		var addBtn = new qx.ui.form.Button ("Add new");
+		var addBtn = new qx.ui.form.Button ("Add new user");
+		addBtn.addListener ("execute", function () {
+			window.location.hash = "#users/edituser";
+		});
 		addBtn.setAllowGrowX (false);
 		addBtn.setAllowGrowY (false);
 		addBtn.setAlignY ("middle");
 		this._header.add (addBtn);
 		this._header.add (new qx.ui.core.Spacer (15));
-
+/*
 		var usrs = new praymore.widgets.UserWidget;
-		this._add (usrs, {row: 2, column: 1});
+		this._add (usrs, {row: 2, column: 0});
 		
 		usrs.setUserName ("Vladimir");
-	},
+*/	},
 
 	members: {
-		dispatch: function () { return this; }
+		dispatch: function (hash) {
+			if (hash == "edituser") {
+				return new praymore.sections.EditUser;
+			} else {
+				return this;
+			}
+		}
 	},
 
 	statics: {
