@@ -1,12 +1,14 @@
 
-
 qx.Class.define ("praymore.widgets.ClientWidget",
 {
 	extend : qx.ui.core.Widget,
-	construct: function () {
+	construct: function (usr) {
 		this.base (arguments);
 		this.setWidth(200);
 		this.setHeight(50);
+		this.setAllowGrowX (false);
+		this.setAllowGrowY (false);
+
 		var layout = new qx.ui.layout.Grid(4, 4);
 		layout.setColumnFlex(1, 1);
 		layout.setSpacingX(5);
@@ -14,7 +16,7 @@ qx.Class.define ("praymore.widgets.ClientWidget",
 		this._setLayout(layout);
 		
 		
-		this.setDecorator(new qx.ui.decoration.Single(1,"solid","red"));
+		this.setDecorator(new qx.ui.decoration.Single(1,"solid","white"));
 
 //		this.setAppearance("groupbox/frame");
 		this.setTextColor("red");
@@ -38,7 +40,7 @@ qx.Class.define ("praymore.widgets.ClientWidget",
 		this.setFont(fn);
 //		this._add (this.getuser("Test Property"), {row: 3, column: 1});
 		
-		this._add (new qx.ui.basic.Label (this.getUser()), {row: 3, column: 1});
+		this._add (new qx.ui.basic.Label (usr.name), {row: 3, column: 1});
 
 		this.setShadow(new qx.ui.decoration.Single(1,"solid","gray"));
 

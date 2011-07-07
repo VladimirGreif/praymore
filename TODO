@@ -1,10 +1,19 @@
 gui
+ - dispatcher = {dashboard: praymore.sections.Dashboard, users: {index: praymore.sections.Users, edit:...}}
  - автоматически генерировать hash страниц
  - асинхронное общение с сервером
  - когда обновлять инфо о юзере?
  - поделить BasePage на две части: с заголовком и без
-
+ - тестовая затычка для api
+ - mixin FixedSize
 srv
  - декораторы
  - taint
  - session timeout
+
+
+- презентация
+ - редактирование пользователя
+ - графики на dashboard'е
+ - ссылка с пояснением, что ничего не работает
+ - обновление при нажатии на текущую кнопку меню
