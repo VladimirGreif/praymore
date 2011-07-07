@@ -29,9 +29,9 @@ qx.Class.define ("praymore.MainMenu",
 		this.addSpacer ();
 
 		var userMenu = new qx.ui.menu.Menu;
-		var m1 = new qx.ui.menu.Button ("Настройки");
+		var m1 = new qx.ui.menu.Button ("Preferences");
 		userMenu.add (m1);
-		var m2 = new qx.ui.menu.Button ("Выйти");
+		var m2 = new qx.ui.menu.Button ("Logout");
 		m2.addListener ("execute", this.__logout, this);
 		userMenu.add (m2);
 		userMenu.setShadow (this.setShadow(new qx.ui.decoration.Single(2,"solid","silver")));
