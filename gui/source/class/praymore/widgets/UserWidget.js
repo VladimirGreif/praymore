@@ -3,10 +3,15 @@
 qx.Class.define ("praymore.widgets.UserWidget",
 {
 	extend : qx.ui.core.Widget,
-	construct: function () {
+	construct: function (usr) {
 		this.base (arguments);
-		this.setWidth(400);
+		this.setWidth(350);
 		this.setHeight(100);
+		this.setAllowGrowX (false);
+		this.setAllowGrowY (false);
+
+		this.image = new qx.ui.basic.Image ("praymore/noImage.png");
+		this.projectProgress = new qx.ui.indicator.ProgressBar (0, 100);
 		var layout = new qx.ui.layout.Grid(4, 4);
 		layout.setColumnFlex(1, 1);
 		layout.setSpacingX(5);
@@ -24,19 +29,19 @@ qx.Class.define ("praymore.widgets.UserWidget",
 		view.add (this.image);
 		view.setWidth(100);
 		view.setHeight(100);
-		view.setDecorator(new qx.ui.decoration.Single(1,"solid","silver"));
+		view.setDecorator(new qx.ui.decoration.Single(1,"solid","white"));
 		this._add (view, {row: 0, column: 0, rowSpan: 4});
 
 		this.setBackgroundColor("white");
-
 		this.setDecorator(new qx.ui.decoration.Single(1,"solid","silver"));
 
-		this.setTextColor("blue");
-		
-		var fn = new qx.bom.Font(20,["Verdana", "sans-serif"]);
+		var name = new qx.ui.basic.Label ().set (
+			{rich: true
+			,value: "<h2 style='color:#006;'><a href='#users/edit/" + usr._id + "'>" + usr.name + "</a></h2>"
+			});
+		this._add (name, {row: 0, column: 1});
 
-		this.setFont(fn);
-		this._add (new qx.ui.basic.Label (this.getUserName()).set({Width: 100,Height: 25}), {row: 0, column: 1});
+		var fn = new qx.bom.Font(14,["Verdana", "sans-serif"]);
 		fn.setSize(14);
 		var lb = new qx.ui.basic.Label ("Working with "+ 2 + " projects");
 		lb.setTextColor("black");
@@ -48,7 +53,7 @@ qx.Class.define ("praymore.widgets.UserWidget",
 	//	this.projectProgress.setLayout(new qx.ui.layout.HBox(5));
 //		lb.setTextColor("red");
 		var lbp = new qx.ui.basic.Label (50 + "%");
-		lbp.setTextColor("red");
+		lbp.setTextColor("white");
 		this.projectProgress.addAt(lbp);
 		this.projectProgress.setValue(50-8);
 		lbp.setMarginLeft(-40);
@@ -57,9 +62,9 @@ qx.Class.define ("praymore.widgets.UserWidget",
 	},
 
 	members: {
-		image : new qx.ui.basic.Image("praymore/noImage.png"),
+		image : null, 
 //		userName : new qx.ui.basic.Label ("Default").set({Width: 100,Height: 25})
-		projectProgress : new qx.ui.indicator.ProgressBar(0, 100),
+		projectProgress : null,
 		
 		setImage : function (path) {
 			this.image.setSource(path);			

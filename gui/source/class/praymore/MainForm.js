@@ -20,7 +20,7 @@ qx.Class.define ("praymore.MainForm",
 
 		this.__menu = new praymore.MainMenu (
 			[ praymore.sections.Dashboard
-			, praymore.sections.Milestones
+//			, praymore.sections.Milestones
 			, praymore.sections.Users
 			, praymore.sections.Projects
 			, praymore.sections.Clients

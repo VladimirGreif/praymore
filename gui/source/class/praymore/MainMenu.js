@@ -14,28 +14,24 @@ qx.Class.define ("praymore.MainMenu",
 		var len = sections.length;
 		for (var i = 0; i < len; ++i) {
 			var s = sections[i];
+			var h = s.getHash ();
 			var btn = new qx.ui.toolbar.RadioButton (s.getName ());
+			(function (h) {
+				btn.addListener ("click", function () {
+					window.location.hash = h;
+				})
+			}) (h);
 			this.add (btn);
 			grp.add (btn);
-			var h = s.getHash ();
-			//btn.setUserData ("hash", h);
 			this.__sections[h] = btn;
-			(function (h){
-					btn.addListener("click", function(){ window.location.hash = h; });
-				}
-			)(h);
 		}
-
-	//	grp.addListener ("changeSelection", function (e) {
-	//		window.location.hash = e.getData ()[0].getUserData ("hash");
-	//	}); 
 
 		this.addSpacer ();
 
 		var userMenu = new qx.ui.menu.Menu;
-		var m1 = new qx.ui.menu.Button ("Настройки");
+		var m1 = new qx.ui.menu.Button ("Preferences");
 		userMenu.add (m1);
-		var m2 = new qx.ui.menu.Button ("Выйти");
+		var m2 = new qx.ui.menu.Button ("Logout");
 		m2.addListener ("execute", this.__logout, this);
 		userMenu.add (m2);
 		userMenu.setShadow (this.setShadow(new qx.ui.decoration.Single(2,"solid","silver")));
@@ -60,7 +56,7 @@ qx.Class.define ("praymore.MainMenu",
 
 		refresh: function () {
 			// FIXME: когда обновлять инфо о юзере?
-			var usr = praymore.Util.get ("api/userInfo");
+			var usr = praymore.Util.get ("api/loggedUser");
 			if (usr && "ok" in usr) {
 				this.__userMenuBtn.setLabel (usr.ok.name);
 			}

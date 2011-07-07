@@ -53,17 +53,47 @@ class Api:
 		return json.dumps ({"ok": True})
 
 
-	@expose
-	def userInfo (self):
+	def _loggedUser (self):
 		s = cherrypy.request.cookie.get ('session')
 		if s:
 			sess = db.sessions.find_one ({"s": s.value})
 			if sess:
-				usr = db.users.find_one ({"_id": sess["usr"]})
-				if usr:
-					usr["_id"] = "?"
-					return json.dumps ({"ok": usr})
+				return db.users.find_one ({"_id": sess["usr"]})
+
+	@expose
+	def loggedUser (self):
+		usr = self._loggedUser ()
+		if usr:
+			usr["_id"] = str (usr["_id"])
+			return json.dumps ({"ok": usr})
 		return json.dumps ({"loginRequired": True})
+
+
+	@expose
+	def userInfo (self, uid):
+		if not self._loggedUser ():
+			return json.dumps ({"loginRequired": True})
+
+		try:
+			oid = pymongo.objectid.ObjectId (uid)
+			usr = db.users.find_one ({"_id": oid })
+			if usr:
+				usr["_id"] = str (usr["_id"])
+				return json.dumps ({"ok": usr})
+		except:
+			pass
+
+		return json.dumps ({"error": "invalid user id"}) 
+
+
+	@expose
+	def users (self):
+		if not self._loggedUser ():
+			return json.dumps ({"loginRequired": True})
+		users = list (db.users.find ({}, {"name":1}))
+		for u in users:
+			u["_id"] = str(u["_id"])
+		return json.dumps ({"ok": users})		
 
 
 	@expose
