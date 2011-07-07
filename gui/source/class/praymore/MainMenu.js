@@ -16,15 +16,19 @@ qx.Class.define ("praymore.MainMenu",
 			var s = sections[i];
 			var btn = new qx.ui.toolbar.RadioButton (s.getName ());
 			this.add (btn);
-			grp.add (btn)
+			grp.add (btn);
 			var h = s.getHash ();
-			btn.setUserData ("hash", h);
+			//btn.setUserData ("hash", h);
 			this.__sections[h] = btn;
+			(function (h){
+					btn.addListener("click", function(){ window.location.hash = h; });
+				}
+			)(h);
 		}
 
-		grp.addListener ("changeSelection", function (e) {
-			window.location.hash = e.getData ()[0].getUserData ("hash");
-		}); 
+	//	grp.addListener ("changeSelection", function (e) {
+	//		window.location.hash = e.getData ()[0].getUserData ("hash");
+	//	}); 
 
 		this.addSpacer ();
 

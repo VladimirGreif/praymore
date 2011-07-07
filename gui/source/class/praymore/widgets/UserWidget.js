@@ -26,9 +26,10 @@ qx.Class.define ("praymore.widgets.UserWidget",
 		view.setHeight(100);
 		view.setDecorator(new qx.ui.decoration.Single(1,"solid","silver"));
 		this._add (view, {row: 0, column: 0, rowSpan: 4});
-		
 
-		this.setDecorator(new qx.ui.decoration.Single(1,"solid","red"));
+		this.setBackgroundColor("white");
+
+		this.setDecorator(new qx.ui.decoration.Single(1,"solid","silver"));
 
 		this.setTextColor("blue");
 		

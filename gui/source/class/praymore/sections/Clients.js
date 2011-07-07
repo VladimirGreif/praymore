@@ -6,7 +6,7 @@ qx.Class.define ("praymore.sections.Clients",
 	construct: function () {
 		this.base (arguments);
 
-		var addBtn = new qx.ui.form.Button ("Add new");
+		var addBtn = new qx.ui.form.Button ("Add new","praymore/Plus16.png");
 		addBtn.setAllowGrowX (false);
 		addBtn.setAllowGrowY (false);
 		addBtn.setAlignY ("middle");

@@ -85,7 +85,6 @@ qx.Class.define ("praymore.MainForm",
 			lazyAdd (praymore.sections.Users);
 			lazyAdd (praymore.sections.Projects);
 			lazyAdd (praymore.sections.Clients);
-			lazyAdd (praymore.sections.EditUser);
 		},
 
 		__pages: null,

@@ -6,7 +6,7 @@ qx.Class.define ("praymore.sections.Users",
 	construct: function () {
 		this.base (arguments);
 
-		var addBtn = new qx.ui.form.Button ("Add new user");
+		var addBtn = new qx.ui.form.Button ("Add new user","praymore/Plus16.png");
 		addBtn.addListener ("execute", function () {
 			window.location.hash = "#users/edituser";
 		});
@@ -15,12 +15,11 @@ qx.Class.define ("praymore.sections.Users",
 		addBtn.setAlignY ("middle");
 		this._header.add (addBtn);
 		this._header.add (new qx.ui.core.Spacer (15));
-/*
+/**/
 		var usrs = new praymore.widgets.UserWidget;
 		this._add (usrs, {row: 2, column: 0});
-		
-		usrs.setUserName ("Vladimir");
-*/	},
+	
+	},
 
 	members: {
 		dispatch: function (hash) {

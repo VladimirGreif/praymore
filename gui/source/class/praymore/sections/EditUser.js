@@ -5,6 +5,8 @@ qx.Class.define ("praymore.sections.EditUser",
 
 	construct: function () {
 		this.base (arguments);
+
+
 	},
 
 	members: {
