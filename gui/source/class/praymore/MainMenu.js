@@ -56,7 +56,7 @@ qx.Class.define ("praymore.MainMenu",
 
 		refresh: function () {
 			// FIXME: когда обновлять инфо о юзере?
-			var usr = praymore.Util.get ("api/userInfo");
+			var usr = praymore.Util.get ("api/loggedUser");
 			if (usr && "ok" in usr) {
 				this.__userMenuBtn.setLabel (usr.ok.name);
 			}

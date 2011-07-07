@@ -61,12 +61,29 @@ class Api:
 				return db.users.find_one ({"_id": sess["usr"]})
 
 	@expose
-	def userInfo (self):
+	def loggedUser (self):
 		usr = self._loggedUser ()
 		if usr:
-			usr["_id"] = "?"
+			usr["_id"] = str (usr["_id"])
 			return json.dumps ({"ok": usr})
 		return json.dumps ({"loginRequired": True})
+
+
+	@expose
+	def userInfo (self, uid):
+		if not self._loggedUser ():
+			return json.dumps ({"loginRequired": True})
+
+		try:
+			oid = pymongo.objectid.ObjectId (uid)
+			usr = db.users.find_one ({"_id": oid })
+			if usr:
+				usr["_id"] = str (usr["_id"])
+				return json.dumps ({"ok": usr})
+		except:
+			pass
+
+		return json.dumps ({"error": "invalid user id"}) 
 
 
 	@expose
